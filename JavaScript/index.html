@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>Redes de Computadores</title>
+		<meta charset="utf-8">
+
+		<script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-bundle.js"></script>
+		<script src="https://unpkg.com/tone"></script>
+		<script src="https://unpkg.com/@tonejs/ui"></script>
+	</head>
+
+	<body>
+		<h3>Projeto de Redes</h3>
+
+		<div>
+
+			<div>
+				<tone-demo autoplay style="height: 100px; width: 40%;"></tone-demo>				
+			</div>
+
+			<div style="margin-top: 100px;">
+				<!-- <audio id="player" src="./assets/audio1.mp3" controls></audio> -->
+
+				<input id="ti1" value ="TEST"/>
+				<input id="ti2"/>
+				<button onClick="convert();">Convert!</button>
+				<button onClick="reproduzir();">enviar!</button>
+			</div>
+
+		</div>
+
+		<canvas id="analyzer_render"></canvas>
+
+		<script src="js/generate_sound.js"></script>
+		<script src="js/sound_recorder.js"></script>
+	</body>
+
+</html>

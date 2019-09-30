@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@^2/webcomponents-bundle.js"></script>
+    <script src="https://unpkg.com/tone"></script>
+    <script src="https://unpkg.com/@tonejs/ui"></script>
+
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+  </head>
+
+  <body>
+
+    <div id="waveform">testando</div>
+
+  </body>
+
+  <script>
+    var wavesurfer = WaveSurfer.create({
+    container: '#waveform',
+    waveColor: 'violet',
+    progressColor: 'purple'
+    });
+
+    wavesurfer.load('./assets/audio1.mp3');
+  </script>
+
+</html>
