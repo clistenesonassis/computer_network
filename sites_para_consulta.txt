@@ -1,5 +1,0 @@
---- sites de consulta ---
-
-https://developers.google.com/web/fundamentals/media/recording-audio/?hl=pt-br
-
-https://respostas.guj.com.br/40138-como-ler-o-conteudo-de-arquivo-binario-em-javascript
