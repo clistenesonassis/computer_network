@@ -4,16 +4,17 @@ import pyaudio
 import wave
 import numpy as np
 import threading
+import time
 
 class Receiver:
 
     def __init__(self):
-        self.CHUNK = 2048
+        self.CHUNK = 5000
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 2
         self.RATE = 44100
         self.RECORD_SECONDS = 10
-        self.WAVE_OUTPUT_FILENAME = "audiotest.wav"
+        self.mensagem = ''
 
         # use a Blackman window
         self.window = np.blackman( self.CHUNK )
@@ -27,7 +28,7 @@ class Receiver:
                             rate = self.RATE,
                             input = True,
                             frames_per_buffer = self.CHUNK,
-                            output = True)
+                            )
 
         # Array para armazenar audio
         self.frames = []
@@ -41,7 +42,7 @@ class Receiver:
             self.frames.append(data)
 
             # write data out to the audio stream
-            self.stream.write(data)
+            #self.stream.write(data)
 
             # unpack the data and times by the hamming window
             indata = np.array(wave.struct.unpack("%dh"%(len(data)/2),\
@@ -59,20 +60,28 @@ class Receiver:
                 x1 = (y2 - y0) * .5 / (2 * y1 - y2 - y0)
                 # find the frequency and output it
                 thefreq = ( which + x1 ) * self.RATE / self.CHUNK
-                print ( "The freq is %f Hz." % (thefreq) )
+                
+
+                if( thefreq > 2000 and thefreq < 3500 ):
+                    self.mensagem += '0'
+                    print ( "The freq is %f Hz." % (thefreq) )
+                elif( thefreq > 8000 and thefreq < 12000 ):
+                    self.mensagem += '1'
+                    print ( "The freq is %f Hz." % (thefreq) )
             else:
                 thefreq = which * self.RATE / self.CHUNK
-                print ( "The freq is %f Hz." % (thefreq) )
+                
 
+                if( thefreq > 2000 and thefreq < 3500 ):
+                    self.mensagem += '0'
+                    print ( "The freq is %f Hz." % (thefreq) )
+                elif( thefreq > 8000 and thefreq < 12000 ):
+                    self.mensagem += '1'
+                    print ( "The freq is %f Hz." % (thefreq) )
+                    
         print(" * done recording * ")
+        print(self.mensagem)
 
         self.stream.stop_stream()
         self.stream.close()
         self.p.terminate()
-
-        wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
-        wf.setnchannels(CHANNELS)
-        wf.setsampwidth(p.get_sample_size(FORMAT))
-        wf.setframerate(RATE)
-        wf.writeframes(b''.join(frames))
-        wf.close()
