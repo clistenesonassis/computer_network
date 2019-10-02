@@ -9,12 +9,12 @@ class Enlace:
         self.origem = origem
         s = thread.allocate_lock()
 
-    def transmission(self):
+    def transmission(self, msg):
         self.camadaFisica = GeraSom()
         lock = asyncio.Lock()
         lock.acquire()
         try:
-            self.camadaFisica.emitir(output)
+            self.camadaFisica.emitir(msg)
         finally:
             lock.release()
 
