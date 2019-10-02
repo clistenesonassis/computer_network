@@ -1,4 +1,5 @@
 from Gerasom import *
+import asyncio
 
 class Enlace:
 
@@ -10,4 +11,10 @@ class Enlace:
 
     def transmission(self):
         self.camadaFisica = GeraSom()
-        self.colisao
+        lock = asyncio.Lock()
+        lock.acquire()
+        try:
+            self.camadaFisica.emitir(output)
+        finally:
+            lock.release()
+
