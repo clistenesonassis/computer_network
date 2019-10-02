@@ -9,9 +9,11 @@ Created on Tue Sep 10 19:38:40 2019
 import math
 #sudo apt-get install python-pyaudio
 from pyaudio import PyAudio
-from GeraSom import *
-from Conversor import *
-from Receiver import *
+from Python.GeraSom import *
+from Python.Conversor import *
+from Python.Receiver import *
+from Python.aloha import *
+
 
 ##  INPUT  ##
 text_input = "a"
@@ -31,6 +33,8 @@ output = converter.str_to_bin( text_input )
 
 ##  GERA SOM  ##
 som = GeraSom()
-print("Saida: ", som.emitir(output))
 print("Entrada: ", output)
+print("Saida: ", som.emitir(output))
+print("Saida em texto: ", converter.bin_to_str( output ))
+print("Entrada em texto: ", text_input)
 ##  GERA SOM  ##

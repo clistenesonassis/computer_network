@@ -6,8 +6,8 @@ import simpleaudio as sa
 class GeraSom:
     
     def __init__(self):
-        self.wave_obj_1 = sa.WaveObject.from_wave_file("assets/bit1.wav") # Frequência: 2690hz (apróx.)
-        self.wave_obj_0 = sa.WaveObject.from_wave_file("assets/bit0.wav") # Frequência: 460hz (apróx.)
+        self.wave_obj_1 = sa.WaveObject.from_wave_file("assets/bit1.wav") # Frequência: 10000hz (apróx.)
+        self.wave_obj_0 = sa.WaveObject.from_wave_file("assets/bit0.wav") # Frequência: 2690hz (apróx.)
 
     def emitir(self, string):
 
