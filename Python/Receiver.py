@@ -5,6 +5,7 @@ import wave
 import numpy as np
 import threading
 import time
+from Conversor import *
 
 class Receiver:
 
@@ -13,14 +14,21 @@ class Receiver:
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 2
         self.RATE = 44100
-        self.RECORD_SECONDS = 10
+        self.RECORD_SECONDS = 25
         self.mensagem = ''
+        self.flag = 0
+        self.ini = 0
+        self.fim = 0
+        self.tempoF = 3
 
         # use a Blackman window
         self.window = np.blackman( self.CHUNK )
 
         # Criando instância do pyaudio
         self.p = pyaudio.PyAudio()
+        
+        #Criando o cinversor
+        self.converter = Conversor()
 
         # Criando Fluxo de midia
         self.stream = self.p.open(format = self.FORMAT,
@@ -62,7 +70,7 @@ class Receiver:
                 thefreq = ( which + x1 ) * self.RATE / self.CHUNK
                 
 
-                if( thefreq > 2000 and thefreq < 3500 ):
+                if( thefreq > 2000 and thefreq < 3500):
                     self.mensagem += '0'
                     print ( "The freq is %f Hz." % (thefreq) )
                 elif( thefreq > 8000 and thefreq < 12000 ):
@@ -70,7 +78,6 @@ class Receiver:
                     print ( "The freq is %f Hz." % (thefreq) )
             else:
                 thefreq = which * self.RATE / self.CHUNK
-                
 
                 if( thefreq > 2000 and thefreq < 3500 ):
                     self.mensagem += '0'
@@ -79,8 +86,18 @@ class Receiver:
                     self.mensagem += '1'
                     print ( "The freq is %f Hz." % (thefreq) )
                     
-        print(" * done recording * ")
-        print(self.mensagem)
+        print(" * Recording ended! * ")
+
+        msg = ''
+        count = 0
+        for bit in self.mensagem:
+            msg += bit
+            count += 1
+            if( count == 7 ):
+                msg += ' '
+                count = 0
+        print("msg: ", msg)
+        print("Saida em texto: ", self.converter.bin_to_str( msg ))
 
         self.stream.stop_stream()
         self.stream.close()
