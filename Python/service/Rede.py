@@ -8,10 +8,10 @@ class Rede:
 
     def __init__(self, mask='255.0'):
         self.enlace = Enlace() # Camada Enlace
-        self.rota = { 1:"lu", 2:"jo", 3:"ca" }
+        self.rota = { "lu":0.11, "jo":0.101, "ca":1.010 }
 
     def send(self, address, destino, dados):
-        pacote = Pacote(address, destino, dados)
+        pacote = Pacote(address, self.rota[destino], dados)
 
         ## Mudando forma de envio do pacote.
         flag = False
