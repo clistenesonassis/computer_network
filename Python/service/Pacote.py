@@ -5,6 +5,7 @@ class Pacote:
         self.destino = destino
         self.dados = dados
         self.tamanhodados = len(dados)
+        self.quantDados = dados.split()
 
     def setOrigem(self, num1, num2):
         self.origem = str(num1) + '.' + str(num2)

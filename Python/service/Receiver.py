@@ -5,21 +5,21 @@ import wave
 import numpy as np
 import threading
 import time
-from Utils.Conversor import *
+from Conversor import *
 
 class Receiver:
 
-    def __init__(self, tamDado):
+    def __init__(self, temp):
         self.CHUNK = 5500
         self.FORMAT = pyaudio.paInt16
         self.CHANNELS = 2
         self.RATE = 44100
-        self.RECORD_SECONDS = (tamDado)
+        self.RECORD_SECONDS = temp
         self.mensagem = ''
         self.flag = 0
         self.ini = 0
         self.fim = 0
-        self.tempoF = 3
+        self.tempo = temp
 
         # use a Blackman window
         self.window = np.blackman( self.CHUNK )
@@ -69,16 +69,24 @@ class Receiver:
 
                 if( thefreq > 2000 and thefreq < 3500):
                     self.mensagem += '0'
+                    if(self.tempo == 0.5):
+                        return self.mensagem
                 elif( thefreq > 8000 and thefreq < 12000 ):
                     self.mensagem += '1'
+                    if(self.tempo == 0.5):
+                        return self.mensagem
             else:
                 thefreq = which * self.RATE / self.CHUNK
 
                 if( thefreq > 2000 and thefreq < 3500 ):
                     self.mensagem += '0'
+                    if(self.tempo == 0.5):
+                        return self.mensagem
                 elif( thefreq > 8000 and thefreq < 12000 ):
                     self.mensagem += '1'
-                    
+                    if(self.tempo == 0.5):
+                        return self.mensagem
+        
         print("****Transmition Ended! ****")
 
         msg = ''
@@ -89,6 +97,7 @@ class Receiver:
             if( count == 7 ):
                 msg += ' '
                 count = 0
+        return msg
         print("msg: ", msg)
         print("Saida em texto: ", self.converter.bin_to_str( msg ))
 
